@@ -1,8 +1,8 @@
 import json
 import uuid
-import aioredis  # type: ignore[import]
+import aioredis
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from .base import DatabaseAdapter
 
@@ -18,10 +18,10 @@ class RedisAdapter(DatabaseAdapter):
             self._client = aioredis.from_url(self.uri, decode_response=True)
         return self._client
 
-    async def _key(self, collection: str, iotem_id: str) -> str:
-        return f"{self.namespace}: {collection}:{iotem_id}"
+    def _key(self, collection: str, item_id: str) -> str:
+        return f"{self.namespace}:{collection}:{item_id}"
 
-    async def create_item(self, collection: str, data[Dict, Any]) -> str:
+    async def create_item(self, collection: str, data: Dict[str, Any]) -> str:
         client = await self._get_client()
         item_id = uuid.uuid4().hex
         now = datetime.now(timezone.utc).isoformat()
@@ -42,8 +42,8 @@ class RedisAdapter(DatabaseAdapter):
             return False
         doc = json.loads(raw)
         doc["data"] = data
-        doc["updated_at"] = datetime.now(timezone.utc).isoformat
-        await client.set(self._key(collection. item_id), json.dumps(doc))
+        doc["updated_at"] = datetime.now(timezone.utc).isoformat()
+        await client.set(self._key(collection, item_id), json.dumps(doc))
         return True
 
     async def delete_item(self, collection: str, item_id: str) -> bool:
