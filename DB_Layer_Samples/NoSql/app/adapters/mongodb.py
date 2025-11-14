@@ -1,9 +1,7 @@
 from datetime import datetime
-from bson import ObjectId  # type: ignore[import]
-from motor.motor_asyncio import AsyncIOMotorClient  # type: ignore[import]
-
+from bson import ObjectId
+from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Any, Dict, List, Optional
-
 from .base import DatabaseAdapter
 
 

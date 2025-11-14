@@ -2,9 +2,7 @@ import json
 import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
-
-from clickhouse_driver import Client  # type: ignore[import]
-
+from clickhouse_driver import Client
 from .base import DatabaseAdapter
 
 
