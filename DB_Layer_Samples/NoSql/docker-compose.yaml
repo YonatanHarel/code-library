@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  api:
+    image: python:3.11-slim
+    working_dir: /services
+    volumes:
+      - ./: /srv
+    command: bash -lc "pip install -r requirements.txt && uvicorn app.main:app --h 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+      - redis
+      - clickhouse
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    ports:
+      - "9000:9000"
+      - "8123:8123"
