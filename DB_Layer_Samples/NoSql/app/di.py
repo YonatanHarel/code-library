@@ -2,7 +2,7 @@ from .adapters.base import DatabaseAdapter
 from .adapters.clickhouse import ClickHouseAdapter
 from .adapters.mongodb import MongoAdapter
 from .adapters.redisdb import RedisAdapter
-from .config import CLickHouseSettings, load_settings
+from .config import ClickHouseSettings, load_settings
 
 
 _settings = load_settings()

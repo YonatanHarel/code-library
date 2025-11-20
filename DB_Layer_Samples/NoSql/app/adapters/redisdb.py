@@ -1,6 +1,6 @@
 import json
 import uuid
-import aioredis
+import redis
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 from .base import DatabaseAdapter
@@ -10,11 +10,11 @@ class RedisAdapter(DatabaseAdapter):
     def __init__(self, uri:str, namespace:str = "redisdb"):
         self.uri = uri
         self.namespace = namespace
-        self._client: Optional[aioredis.Redis] = None
+        self._client: Optional[redis.Redis] = None
 
-    async def _get_client(self) -> aioredis.Redis:
+    async def _get_client(self) -> redis.Redis:
         if self._client is None:
-            self._client = aioredis.from_url(self.uri, decode_response=True)
+            self._client = redis.from_url(self.uri, decode_response=True)
         return self._client
 
     def _key(self, collection: str, item_id: str) -> str:

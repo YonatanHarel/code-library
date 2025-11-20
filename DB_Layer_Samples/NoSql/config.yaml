@@ -1,11 +1,11 @@
-backend: mongodb # mongodb | redis | clickhouse
+backend: mongodb
 mongo:
-  uri: mongodb://localhost:27017
+  uri: mongodb://mongo:27017
   database: polydb
 redis:
-  uri: redis://localhost:6379/0
-  database: polydb
+  uri: redis://redis:6379/0
+  namespace: polydb
 clickhouse:
-  host: localhost
+  host: clickhouse
   port: 9000
   database: default
